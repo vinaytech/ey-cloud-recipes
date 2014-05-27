@@ -51,5 +51,5 @@ default[:custom_crons] = [
                  :time => "*/10 * * * *", 
                  :command => "cd /data/contexttravel/current && RAILS_ENV=production bundle exec rake contexttravel:fetch_and_catalog_all_client_emails", 
                  :instance_name => "context_cron_job"
-          },
+          }
       ]
