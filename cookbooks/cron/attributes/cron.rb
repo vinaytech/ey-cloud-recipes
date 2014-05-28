@@ -5,7 +5,7 @@ default[:custom_crons] = [
   {
     :name => "Email and SMS alerts", 
     :time => "0 */1 * * *", 
-    :command => "curl http://127.0.0.1:80/admin_cron/hourly", 
+    :command => "curl http://www.contexttravel.com/admin_cron/hourly", 
     :instance_name => "context_cron_job"
     }, 
     {
