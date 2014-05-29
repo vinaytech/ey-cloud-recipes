@@ -34,7 +34,7 @@ default[:custom_crons] = [
         },
         {
               :name => "Report First", 
-              :time => "0 4 */1 * *", 
+              :time => "0 0 */1 * *", 
               :command => "cd /data/contexttravel/current && bundle exec rake sales_metrics:sales_metrics_for_city RAILS_ENV=production", 
               :instance_name => "context_cron_job"
          },
