@@ -46,10 +46,54 @@ default[:custom_crons] = [
                 :instance_name => "context_cron_job"
          }, 
          
-          {
-                 :name => "Email", 
-                 :time => "*/10 * * * *", 
-                 :command => "cd /data/contexttravel/current && RAILS_ENV=production bundle exec rake contexttravel:fetch_and_catalog_all_client_emails", 
-                 :instance_name => "context_cron_job"
-          }
+        {
+               :name => "Email", 
+               :time => "*/10 * * * *", 
+               :command => "/usr/bin/lockrun --lockfile=/tmp/sync_flickr.lockrun -- sh -c  cd /data/contexttravel/current && RAILS_ENV=production bundle exec rake contexttravel:fetch_and_catalog_all_client_emails", 
+               :instance_name => "context_cron_job"
+        },
+        {
+               :name => "Expiry Check", 
+               :time => "*/30 * * * *", 
+               :command => "cd /data/contexttravel/current && RAILS_ENV=production bundle exec rake contexttravel:expiry_check", 
+               :instance_name => "context_cron_job"
+        },
+        {
+               :name => "Random Cleanup Half An Hourly", 
+               :time => "*/30 * * * *", 
+               :command => "cd /data/contexttravel/current && RAILS_ENV=production bundle exec rake contexttravel:cleanup_old_random_string", 
+               :instance_name => "context_cron_job"
+        },
+        {
+               :name => "Random Cleanup Hourly", 
+               :time => "0 1 */7 * *", 
+               :command => "cd /data/contexttravel/current && RAILS_ENV=production bundle exec rake contexttravel:cleanup_old_random_string", 
+               :instance_name => "context_cron_job"
+        },
+        {
+               :name => "First Assignment Mail", 
+               :time => "*/30 * * * *", 
+               :command => "cd /data/contexttravel/current && RAILS_ENV=production bundle exec rake contexttravel:first_assignment_mail", 
+               :instance_name => "context_cron_job"
+        },
+        {
+               :name => "Write To CDN", 
+               :time => "*/45 * * * *", 
+               :command => "/usr/bin/lockrun --lockfile=/tmp/sync_flickr.lockrun -- sh -c  cd /data/contexttravel/current && RAILS_ENV=production bundle exec rake cdn:write_to_cdn", 
+               :instance_name => "context_cron_job"
+        },
+        {
+               :name => "Create City Profitabilities", 
+               :time => "* */8 * * *", 
+               :command => "cd /data/contexttravel/current && RAILS_ENV=production bundle exec rake profitabilities:create_or_update_city_profitabilities", 
+               :instance_name => "context_cron_job"
+        },
+        {
+               :name => "Reminder to Client", 
+               :time => "0 */1 * * *", 
+               :command => "cd /data/contexttravel/current && RAILS_ENV=production bundle exec rake contexttravel:mail_to_client", 
+               :instance_name => "context_cron_job"
+
+        }
+
       ]
